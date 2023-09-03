@@ -7,7 +7,7 @@ Homemade bash script to back up a Ghost instance on S3.
 Using it is as simple as running:
 
 ```bash
-$ ./ghost-backup /var/www/blog.example.org/
+$ ./ghost-backup.sh /var/www/blog.example.org/
 ```
 
 ## Requirements
