@@ -5,7 +5,8 @@ set -euxo pipefail
 # Base variables
 INSTALL_PATH="$1"
 
-BACKUP_ROOT_PATH="$HOME/.ghost-backups"
+BACKUP_ROOT_PATH="$HOME/.ghost-backup"
+CONFIG_PATH="$HOME/.config/ghost-backup.json"
 
 GHOST_CMD="/usr/local/bin/ghost"
 TAR_CMD="/usr/bin/tar"
@@ -39,8 +40,8 @@ $TAR_CMD czf "$BACKUP_ROOT_PATH/$BACKUP_FILENAME" -C "$BACKUP_ROOT_PATH" content
 rm "$BACKUP_ROOT_PATH/content.tar.gz" "$BACKUP_ROOT_PATH/database.sql"
 
 # 5. upload to S3
-AWS_ENDPOINT_URL=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.endpoint" "$BACKUP_ROOT_PATH/config.json")
-AWS_BUCKET=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.bucket" "$BACKUP_ROOT_PATH/config.json")
+AWS_ENDPOINT_URL=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.endpoint" "$CONFIG_PATH")
+AWS_BUCKET=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.bucket" "$CONFIG_PATH")
 
 $AWS_CMD s3 --endpoint-url "$AWS_ENDPOINT_URL" cp "$BACKUP_ROOT_PATH/$BACKUP_FILENAME" "s3://$AWS_BUCKET/$BACKUP_FILENAME"
 
