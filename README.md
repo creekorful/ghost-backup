@@ -45,7 +45,8 @@ Here is an example configuration file:
   "/var/www/blog.example.org/": {
     "aws": {
       "endpoint": "https://s3.us-west-000.backblazeb2.com",
-      "bucket": "blog-example-org"
+      "bucket": "blog-example-org",
+      "directory": ""
     }
   }
 }
