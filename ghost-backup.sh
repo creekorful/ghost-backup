@@ -23,7 +23,7 @@ $MKDIR_CMD -p "$BACKUP_ROOT_PATH"
 $GHOST_CMD stop --dir "$INSTALL_PATH"
 
 # 2. backup file system
-$TAR_CMD cf "$BACKUP_ROOT_PATH/content.tar.gz" -C "$INSTALL_PATH" .
+$TAR_CMD cf "$BACKUP_ROOT_PATH/content.tar" -C "$INSTALL_PATH" .
 
 # 3. backup MySQL database
 MYSQL_USER=$($JQ_CMD -r .database.connection.user "$INSTALL_PATH/config.production.json")
