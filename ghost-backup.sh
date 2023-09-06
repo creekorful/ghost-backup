@@ -30,7 +30,7 @@ MYSQL_USER=$($JQ_CMD -r .database.connection.user "$INSTALL_PATH/config.producti
 MYSQL_PASSWORD=$($JQ_CMD -r .database.connection.password "$INSTALL_PATH/config.production.json")
 MYSQL_DATABASE=$($JQ_CMD -r .database.connection.database "$INSTALL_PATH/config.production.json")
 
-$MYSQLDUMP_CMD -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" > "$BACKUP_ROOT_PATH/database.sql"
+$MYSQLDUMP_CMD --no-tablespaces -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" > "$BACKUP_ROOT_PATH/database.sql"
 
 # 4. compress everything together
 BACKUP_FILENAME="backup-$(date +"%Y-%m-%d").tar.gz"
