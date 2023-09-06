@@ -8,7 +8,7 @@ INSTALL_PATH="$1"
 BACKUP_ROOT_PATH="$HOME/.ghost-backup"
 CONFIG_PATH="$HOME/.config/ghost-backup.json"
 
-GHOST_CMD="/usr/local/bin/ghost"
+GHOST_CMD="/usr/bin/ghost"
 TAR_CMD="/usr/bin/tar"
 MYSQLDUMP_CMD="/usr/bin/mysqldump"
 MKDIR_CMD="/usr/bin/mkdir"
