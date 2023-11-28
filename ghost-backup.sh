@@ -36,8 +36,8 @@ $MYSQLDUMP_CMD --no-tablespaces -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" "$MYSQL_DATA
 BACKUP_FILENAME="backup-$(date +"%Y-%m-%d").tar.gz"
 $RM_CMD -f "$BACKUP_ROOT_PATH/$BACKUP_FILENAME"
 
-$TAR_CMD czf "$BACKUP_ROOT_PATH/$BACKUP_FILENAME" -C "$BACKUP_ROOT_PATH" content.tar.gz database.sql
-rm "$BACKUP_ROOT_PATH/content.tar.gz" "$BACKUP_ROOT_PATH/database.sql"
+$TAR_CMD czf "$BACKUP_ROOT_PATH/$BACKUP_FILENAME" -C "$BACKUP_ROOT_PATH" content.tar database.sql
+rm "$BACKUP_ROOT_PATH/content.tar" "$BACKUP_ROOT_PATH/database.sql"
 
 # 5. upload to S3
 AWS_ENDPOINT_URL=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.endpoint" "$CONFIG_PATH")
