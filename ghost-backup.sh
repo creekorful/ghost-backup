@@ -39,12 +39,12 @@ $RM_CMD -f "$BACKUP_ROOT_PATH/$BACKUP_FILENAME"
 $TAR_CMD czf "$BACKUP_ROOT_PATH/$BACKUP_FILENAME" -C "$BACKUP_ROOT_PATH" content.tar database.sql
 rm "$BACKUP_ROOT_PATH/content.tar" "$BACKUP_ROOT_PATH/database.sql"
 
-# 5. upload to S3
+# 5. restart ghost instance
+$GHOST_CMD start --dir "$INSTALL_PATH"
+
+# 6. upload to S3
 AWS_ENDPOINT_URL=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.endpoint" "$CONFIG_PATH")
 AWS_BUCKET=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.bucket" "$CONFIG_PATH")
 AWS_DIRECTORY=$($JQ_CMD --arg BASE_CONFIG_KEY "$INSTALL_PATH" -r ".[\$BASE_CONFIG_KEY].aws.directory" "$CONFIG_PATH")
 
 $AWS_CMD s3 --endpoint-url "$AWS_ENDPOINT_URL" cp "$BACKUP_ROOT_PATH/$BACKUP_FILENAME" "s3://$AWS_BUCKET/$AWS_DIRECTORY/$BACKUP_FILENAME"
-
-# 6. restart ghost instance
-$GHOST_CMD start --dir "$INSTALL_PATH"
